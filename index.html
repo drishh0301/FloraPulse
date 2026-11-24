@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FloraPulse — Plant Health Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="banner" class="banner" hidden role="alert"></div>
+<header class="top">
+  <h1>FloraPulse <small>Smart plant health &amp; irrigation</small></h1>
+  <div class="ctrl">
+    <span id="conn" class="badge">CONNECTING…</span>
+    <button id="mute" title="Mute alerts">🔔 Sound on</button>
+    <button id="notif">Enable notifications</button>
+    <button id="theme">☀ / ☾</button>
+  </div>
+</header>
+<main>
+<section class="hero card">
+  <div class="gauge">
+    <svg viewBox="0 0 120 120"><circle class="trk" cx="60" cy="60" r="52"/><circle id="arc" class="arc" cx="60" cy="60" r="52"/></svg>
+    <div class="gv"><b id="phi">--</b><span>Plant Health Index</span></div>
+  </div>
+  <div class="hinfo">
+    <div class="stat"><i id="ledDot" class="ledDot" title="Status LED"></i><h2 id="lvl">--</h2></div>
+    <p>PHI = 0.4·Soil + 0.2·Light + 0.2·TempScore + 0.2·HumScore</p>
+    <p>Last update: <span id="ts">never</span></p>
+    <button id="boost" class="primary">💧 Water boost (3 s)</button>
+  </div>
+</section>
+
+<section class="grid">
+  <article class="card"><h3>Soil moisture</h3><b class="big" id="soil">--</b>
+    <div class="bar"><i id="soilBar"></i><u style="left:30%"></u><u style="left:40%"></u></div>
+    <p class="mut">Pump ON ≤ 30% · OFF ≥ 40% · Pump: <b id="pumpTxt">OFF</b></p></article>
+  <article class="card"><h3>Ambient climate</h3>
+    <b class="big" id="temp">--</b> <span id="tB" class="badge"></span><br>
+    <b class="big" id="hum">--</b> <span id="hB" class="badge"></span>
+    <p class="mut">Optimal 20–30 °C · 40–70 %</p></article>
+  <article class="card"><h3>Light exposure</h3><b class="big" id="light">--</b>
+    <p id="lightTxt" class="mut">--</p><div class="bar"><i id="lightBar"></i></div></article>
+  <article class="card"><h3>Water reservoir</h3>
+    <div class="tank"><div id="water" class="fill"></div></div>
+    <b class="big" id="waterTxt">--</b><p id="tankSt" class="mut">--</p></article>
+</section>
+
+<section class="charts">
+  <div class="card"><h3>Soil moisture &amp; hysteresis</h3><canvas id="c1"></canvas></div>
+  <div class="card"><h3>PHI &amp; climate trends</h3><canvas id="c2"></canvas></div>
+  <div class="card"><h3>Tank level &amp; pump duty</h3><canvas id="c3"></canvas></div>
+</section>
+
+<section class="grid2">
+  <div class="card"><h3>Viva simulation</h3>
+    <label class="sw"><input type="checkbox" id="sim"> Simulation mode (offline demo)</label>
+    <div id="sliders" class="sl"></div>
+  </div>
+  <div class="card"><h3>Event log</h3><ul id="log" class="log"></ul></div>
+</section>
+</main>
+<div id="toasts"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
